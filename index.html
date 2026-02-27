@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monitoring Asesmen - LPKA Kutoarjo</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="top-bar"></div>
+    <div class="container">
+        <header class="official-header">
+            <div class="header-content">
+                <div class="header-text">
+                    <h1>Sistem Monitoring Asesmen Anak Binaan</h1>
+                    <p>Lembaga Pembinaan Khusus Anak Kelas I Kutoarjo</p>
+                </div>
+                <div class="status-panel">
+                    <div class="time-widget">
+                        <i class="far fa-calendar-alt"></i> <span id="current-time">Memuat waktu...</span>
+                    </div>
+                    <div class="db-widget" id="db-status">
+                        <div class="status-indicator"></div>
+                        <span id="status-text">Mengecek Koneksi...</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <section class="search-section">
+                <div class="search-card">
+                    <h2><i class="fas fa-search"></i> Pencarian Data Asesmen</h2>
+                    <p>Masukkan nama Anak Binaan untuk melihat profil dan riwayat asesmen.</p>
+                    <form id="search-form">
+                        <div class="input-group">
+                            <input type="text" id="search-input" placeholder="Ketik nama anak binaan di sini..." required autocomplete="off">
+                            <button type="submit" id="search-btn">
+                                <i class="fas fa-search"></i> Cari Data
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </section>
+
+            <div id="loading" class="hidden">
+                <div class="spinner"></div>
+                <p>Menyinkronkan dengan database sheet...</p>
+            </div>
+            <div id="error-msg" class="hidden alert alert-danger"></div>
+
+            <section id="results" class="hidden">
+                <div class="result-layout">
+                    
+                    <div class="card id-card">
+                        <div class="card-accent"></div>
+                        <div class="card-body">
+                            <div class="text-center">
+                                <div class="avatar-placeholder">
+                                    <i class="fas fa-user-graduate"></i>
+                                </div>
+                                <p class="label-sm">Identitas Anak Binaan</p>
+                                <h2 id="res-nama" class="anbin-name">-</h2>
+                                <p class="history-count" id="res-count">Ditemukan 0 Riwayat Asesmen</p>
+                            </div>
+                            
+                            <div class="profile-details">
+                                <div class="detail-box">
+                                    <span class="detail-label"><i class="fas fa-star text-accent"></i> Minat & Bakat</span>
+                                    <div class="detail-value" id="res-minat">-</div>
+                                </div>
+                                <div class="detail-box">
+                                    <span class="detail-label"><i class="fas fa-exclamation-circle text-muted"></i> Catatan Kriminogenik</span>
+                                    <div class="detail-value catatan-highlight" id="res-catatan">-</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card assessment-card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-history"></i> Riwayat Hasil Asesmen</h3>
+                        </div>
+                        <div class="card-body p-0">
+                            <div class="table-responsive">
+                                <table class="history-table">
+                                    <thead>
+                                        <tr>
+                                            <th>No.</th>
+                                            <th>Tanggal Asesmen</th>
+                                            <th>Nilai RRI & Kriminogenik</th>
+                                            <th>Hasil Nilai IPPA</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="res-history-body">
+                                        </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </section>
+        </main>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
