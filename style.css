@@ -95,15 +95,18 @@ body { background-color: var(--bg-color); color: var(--text-main); line-height: 
 .assessment-card .card-header h3 { color: var(--primary); font-size: 1.1rem; }
 .p-0 { padding: 0 !important; }
 
-/* FIX SCROLL SAMPING: table-layout fixed & hilangkan overflow-x */
+/* FIX SCROLL SAMPING & KERAPIAN KOLOM: table-layout fixed */
 .table-responsive { width: 100%; }
 .history-table { width: 100%; border-collapse: separate; border-spacing: 0; text-align: left; table-layout: fixed; }
 
-/* Mengatur proporsi lebar masing-masing kolom agar pas 100% */
-.history-table th:nth-child(1) { width: 10%; } /* Kolom No */
-.history-table th:nth-child(2) { width: 35%; } /* Kolom Tanggal */
-.history-table th:nth-child(3) { width: 30%; } /* Kolom RRI */
-.history-table th:nth-child(4) { width: 25%; } /* Kolom IPPA */
+/* PENYESUAIAN LEBAR KOLOM TERBARU */
+.history-table th:nth-child(1) { width: 8%; text-align: center; } /* Kolom No - Dikecilkan & ke tengah */
+.history-table th:nth-child(2) { width: 30%; } /* Kolom Tanggal - Disesuaikan */
+.history-table th:nth-child(3) { width: 42%; } /* Kolom RRI - DILEBARKAN secara signifikan */
+.history-table th:nth-child(4) { width: 20%; text-align: center; } /* Kolom IPPA - Ke tengah */
+
+.history-table td:nth-child(1) { text-align: center; font-weight: 500;} /* Angka No ke tengah */
+.history-table td:nth-child(4) { text-align: center; } /* Badge IPPA ke tengah */
 
 .history-table th {
     background-color: #f8fafc; color: var(--primary); font-weight: 600;
@@ -159,4 +162,7 @@ body { background-color: var(--bg-color); color: var(--text-main); line-height: 
     }
     .history-table td:last-child { border-bottom: none; }
     .badge { white-space: nowrap; }
+    
+    /* Reset text-align untuk tampilan mobile */
+    .history-table td:nth-child(1), .history-table td:nth-child(4) { text-align: right; }
 }
