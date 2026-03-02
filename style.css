@@ -8,6 +8,7 @@
     --text-main: #334155;
     --text-muted: #64748b;
     --border-color: #e2e8f0;
+    --danger: #ef4444;
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
@@ -48,11 +49,11 @@ body { background-color: var(--bg-color); color: var(--text-main); line-height: 
 .search-card p { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 20px; }
 
 .input-group { display: flex; gap: 10px; }
-#search-input { flex: 1; padding: 15px 20px; border: 2px solid var(--border-color); border-radius: 8px; font-size: 1rem; transition: all 0.3s ease; }
-#search-input:focus { border-color: var(--secondary); outline: none; box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1); }
+#search-input { flex: 1; padding: 15px 20px; border: 2px solid var(--border-color); border-radius: 8px; font-size: 1rem; transition: all 0.3s ease; width: 100%;}
 #search-btn {
     background: var(--secondary); color: white; border: none; padding: 0 25px; border-radius: 8px;
     font-size: 1rem; font-weight: 600; cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; gap: 8px;
+    white-space: nowrap;
 }
 #search-btn:hover { background: var(--primary-light); transform: translateY(-2px); }
 
@@ -86,8 +87,14 @@ body { background-color: var(--bg-color); color: var(--text-main); line-height: 
 .detail-value { font-size: 0.95rem; color: var(--text-main); font-weight: 500; }
 .text-accent { color: var(--accent); }
 .text-muted { color: #94a3b8; }
+.text-danger { color: var(--danger); }
+
+/* Styling untuk highlights */
 .catatan-highlight {
     background: #f8fafc; padding: 12px 15px; border-radius: 6px; border-left: 3px solid var(--accent); font-size: 0.9rem; line-height: 1.5;
+}
+.pelanggaran-highlight {
+    background: #fef2f2; padding: 12px 15px; border-radius: 6px; border-left: 3px solid var(--danger); font-size: 0.9rem; line-height: 1.5; color: #991b1b;
 }
 
 /* History Table */
@@ -95,24 +102,21 @@ body { background-color: var(--bg-color); color: var(--text-main); line-height: 
 .assessment-card .card-header h3 { color: var(--primary); font-size: 1.1rem; }
 .p-0 { padding: 0 !important; }
 
-/* FIX SCROLL SAMPING & KERAPIAN KOLOM: table-layout fixed */
-.table-responsive { width: 100%; }
-.history-table { width: 100%; border-collapse: separate; border-spacing: 0; text-align: left; table-layout: fixed; }
+.table-responsive { width: 100%; overflow-x: auto;}
+.history-table { width: 100%; border-collapse: separate; border-spacing: 0; text-align: left; table-layout: fixed; min-width: 500px;}
 
-/* PENYESUAIAN LEBAR KOLOM TERBARU */
-.history-table th:nth-child(1) { width: 8%; text-align: center; } /* Kolom No - Dikecilkan & ke tengah */
-.history-table th:nth-child(2) { width: 30%; } /* Kolom Tanggal - Disesuaikan */
-.history-table th:nth-child(3) { width: 42%; } /* Kolom RRI - DILEBARKAN secara signifikan */
-.history-table th:nth-child(4) { width: 20%; text-align: center; } /* Kolom IPPA - Ke tengah */
+.history-table th:nth-child(1) { width: 8%; text-align: center; } 
+.history-table th:nth-child(2) { width: 28%; } 
+.history-table th:nth-child(3) { width: 44%; } 
+.history-table th:nth-child(4) { width: 20%; text-align: center; } 
 
-.history-table td:nth-child(1) { text-align: center; font-weight: 500;} /* Angka No ke tengah */
-.history-table td:nth-child(4) { text-align: center; } /* Badge IPPA ke tengah */
+.history-table td:nth-child(1) { text-align: center; font-weight: 500;} 
+.history-table td:nth-child(4) { text-align: center; } 
 
 .history-table th {
     background-color: #f8fafc; color: var(--primary); font-weight: 600;
     padding: 15px 10px; border-bottom: 2px solid var(--border-color); 
-    font-size: 0.85rem; line-height: 1.4;
-    word-wrap: break-word;
+    font-size: 0.85rem; line-height: 1.4; word-wrap: break-word;
 }
 .history-table td {
     padding: 15px 10px; border-bottom: 1px solid var(--border-color); color: var(--text-main);
@@ -140,19 +144,21 @@ body { background-color: var(--bg-color); color: var(--text-main); line-height: 
 .alert { padding: 15px 20px; border-radius: 8px; margin-bottom: 20px; font-weight: 500; }
 .alert-danger { background: #fef2f2; color: #991b1b; border: 1px solid #fecaca; }
 
-/* Responsive View */
-@media (max-width: 900px) {
+/* Responsive View (Tablet, iPad, Laptop kecil) */
+@media (max-width: 992px) {
     .result-layout { grid-template-columns: 1fr; } 
     .header-content { flex-direction: column; align-items: center; text-align: center; }
     .status-panel { align-items: center; }
-    .input-group { flex-direction: column; }
-    #search-btn { padding: 15px; justify-content: center; }
 }
 
+/* Responsive View (Mobile / HP) */
 @media (max-width: 600px) {
-    /* Di layar HP tabel diubah menjadi bentuk List agar lebih mudah dibaca tanpa scroll */
+    .container { padding: 15px 10px; }
+    .input-group { flex-direction: column; }
+    #search-btn { padding: 15px; justify-content: center; width: 100%;}
+    
     .history-table thead { display: none; }
-    .history-table, .history-table tbody, .history-table tr, .history-table td { display: block; width: 100%; }
+    .history-table, .history-table tbody, .history-table tr, .history-table td { display: block; width: 100%; min-width: unset;}
     .history-table tr { margin: 15px; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
     .history-table tr:hover { transform: none; box-shadow: 0 4px 6px rgba(0,0,0,0.05); } 
     .history-table td { text-align: right; padding: 15px 15px 15px 45%; position: relative; border-bottom: 1px solid #f1f5f9; min-height: 50px;}
@@ -162,7 +168,5 @@ body { background-color: var(--bg-color); color: var(--text-main); line-height: 
     }
     .history-table td:last-child { border-bottom: none; }
     .badge { white-space: nowrap; }
-    
-    /* Reset text-align untuk tampilan mobile */
     .history-table td:nth-child(1), .history-table td:nth-child(4) { text-align: right; }
 }
