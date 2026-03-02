@@ -1,5 +1,5 @@
-// URL Deploy Apps Script Terbaru
-const API_URL = 'https://script.google.com/macros/s/AKfycbztLUTKiUt4by4zK5Nr-AZylVr2TW8gCr8YVCWkbC5dWjnyaIf8Ig-UFRJ_FmN6Ay4/exec'; 
+// PENTING: Ganti URL di bawah ini dengan URL Web App dari Deploy TERBARU Anda!
+const API_URL = 'https://script.google.com/macros/s/AKfycbyp_BgZrTZLfHXa_o6hGPeLPmZfQmixBgiR6Ml-uXQJh4R_OUV7XecnYIJQF-XM_dq9/exec'; 
 
 const timeSpan = document.getElementById('current-time');
 const statusIndicator = document.querySelector('.status-indicator');
@@ -64,13 +64,15 @@ searchForm.addEventListener('submit', async (e) => {
             document.getElementById('res-nama').innerText = result.data.nama;
             document.getElementById('res-count').innerHTML = `<i class="fas fa-list-ol"></i> Ditemukan ${result.data.history.length} Riwayat Asesmen`;
 
-            // Set Data Profil Tambahan (Diambil dari baris data pertama/terakhir anak tersebut)
-            // Karena datanya sama untuk setiap baris anak, kita cukup ambil index [0]
+            // Set Data Profil Tambahan (Mengambil data dari baris/asesmen terbaru)
             const firstData = result.data.history[0];
             document.getElementById('res-minat').innerText = firstData.minatBakat || '-';
             document.getElementById('res-catatan').innerText = firstData.catatanKriminogenik || '-';
+            
+            // FITUR BARU: Menampilkan data Riwayat Pelanggaran
+            document.getElementById('res-pelanggaran').innerText = firstData.riwayatPelanggaran || 'Tidak Ada Riwayat / Kosong';
 
-            // Render Table History (Hanya fokus pada Tanggal dan Nilai)
+            // Render Table History 
             const tbody = document.getElementById('res-history-body');
             tbody.innerHTML = ''; 
 
