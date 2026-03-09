@@ -170,3 +170,114 @@ body { background-color: var(--bg-color); color: var(--text-main); line-height: 
     .badge { white-space: nowrap; }
     .history-table td:nth-child(1), .history-table td:nth-child(4) { text-align: right; }
 }
+/* =========================================
+   CARD FOOTER STYLING
+   ========================================= */
+   .footer-wrapper {
+    margin-top: 40px;
+    animation: fadeIn 0.8s ease;
+}
+
+.footer-card {
+    /* Menggunakan base style .card yang sudah ada (background, shadow, border) */
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.footer-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 25px -5px rgba(0,0,0,0.08);
+}
+
+.footer-body {
+    padding: 25px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.footer-left, .footer-right {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.footer-right {
+    align-items: flex-end;
+    text-align: right;
+}
+
+.web-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(37, 99, 235, 0.08);
+    color: var(--secondary);
+    padding: 12px 20px;
+    border-radius: 10px; /* Diubah agak kotak agar pas di dalam card */
+    text-decoration: none;
+    font-size: 0.95rem;
+    font-weight: 600;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid rgba(37, 99, 235, 0.1);
+}
+
+.web-link span {
+    text-decoration: underline;
+    text-underline-offset: 4px;
+}
+
+.web-link:hover {
+    background: var(--secondary);
+    color: white;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 15px rgba(37, 99, 235, 0.2);
+}
+
+.main-copyright {
+    color: var(--text-main);
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.magang-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    padding: 6px 12px;
+    background: var(--bg-color);
+    border: 1px dashed var(--border-color);
+    border-radius: 6px;
+    transition: all 0.3s ease;
+}
+
+.magang-badge:hover {
+    color: var(--accent);
+    border-color: var(--accent);
+    background: rgba(245, 158, 11, 0.05);
+}
+
+/* Responsif untuk Tablet dan Layar HP */
+@media (max-width: 768px) {
+    .footer-body {
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
+        padding: 20px;
+    }
+
+    .footer-right {
+        align-items: center;
+        text-align: center;
+    }
+
+    .web-link {
+        font-size: 0.85rem;
+        padding: 10px 18px;
+        justify-content: center;
+    }
+}
