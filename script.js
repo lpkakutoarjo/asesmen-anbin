@@ -1,5 +1,5 @@
 // PENTING: Ganti URL di bawah ini dengan URL Web App dari Deploy TERBARU Anda!
-const API_URL = 'https://script.google.com/macros/s/AKfycbyp_BgZrTZLfHXa_o6hGPeLPmZfQmixBgiR6Ml-uXQJh4R_OUV7XecnYIJQF-XM_dq9/exec'; 
+const API_URL = 'https://script.google.com/macros/s/AKfycbxmsUK-5lXaZAG9CtRMTjATcfWCIJoZ3kENexE6Ix3dRvU5yZKdEQ4QxhDxpFAuEDfu/exec'; 
 
 const timeSpan = document.getElementById('current-time');
 const statusIndicator = document.querySelector('.status-indicator');
@@ -11,7 +11,7 @@ const resultsSection = document.getElementById('results');
 const errorMsg = document.getElementById('error-msg');
 const searchBtn = document.getElementById('search-btn');
 
-// Waktu Real-time
+// 1. Waktu Real-time Indonesia
 function updateTime() {
     const now = new Date();
     const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute:'2-digit' };
@@ -20,7 +20,7 @@ function updateTime() {
 setInterval(updateTime, 1000);
 updateTime();
 
-// Cek Koneksi Database Langsung
+// 2. Cek Koneksi Database (Ping Action)
 async function checkConnection() {
     try {
         const response = await fetch(`${API_URL}?action=ping`);
@@ -38,16 +38,18 @@ async function checkConnection() {
 }
 checkConnection();
 
-// Handle Pencarian
+// 3. Handle Pencarian & Sinkronisasi Struktur Database Baru (Kolom A-H)
 searchForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     const nama = searchInput.value.trim();
     if(!nama) return;
 
+    // Reset UI State
     searchBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Mencari...';
     searchBtn.disabled = true;
     loadingDiv.classList.remove('hidden');
     resultsSection.classList.add('hidden');
+    resultsSection.style.opacity = '0';
     errorMsg.classList.add('hidden');
 
     try {
@@ -57,37 +59,47 @@ searchForm.addEventListener('submit', async (e) => {
         loadingDiv.classList.add('hidden');
 
         if(result.success && result.data.history.length > 0) {
-            resultsSection.style.opacity = '0';
             resultsSection.classList.remove('hidden');
             
-            // Set Identitas Nama dan Jumlah Riwayat
+            // --- UPDATE SIDEBAR PROFIL (KIRI) ---
             document.getElementById('res-nama').innerText = result.data.nama;
-            document.getElementById('res-count').innerHTML = `<i class="fas fa-list-ol"></i> Ditemukan ${result.data.history.length} Riwayat Asesmen`;
-
-            // Set Data Profil Tambahan (Mengambil data dari baris/asesmen terbaru)
-            const firstData = result.data.history[0];
-            document.getElementById('res-minat').innerText = firstData.minatBakat || '-';
-            document.getElementById('res-catatan').innerText = firstData.catatanKriminogenik || '-';
             
-            // FITUR BARU: Menampilkan data Riwayat Pelanggaran
-            document.getElementById('res-pelanggaran').innerText = firstData.riwayatPelanggaran || 'Tidak Ada Riwayat / Kosong';
+            // Gabungkan Minat & Bakat Unik dari Kolom G
+            const minatUnik = [...new Set(result.data.history.map(h => h.minatBakat))].filter(m => m && m !== '-');
+            document.getElementById('res-minat').innerText = minatUnik.length > 0 ? minatUnik.join(", ") : "-";
 
-            // Render Table History 
+            // --- UPDATE TABEL RIWAYAT (KANAN) ---
+            document.getElementById('res-count').innerHTML = `<i class="fas fa-list-ol"></i> Ditemukan ${result.data.history.length} Data`;
+            
             const tbody = document.getElementById('res-history-body');
             tbody.innerHTML = ''; 
 
             result.data.history.forEach((item, index) => {
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
-                    <td data-label="No.">${index + 1}</td>
-                    <td data-label="Tgl Asesmen"><span class="badge badge-date"><i class="far fa-calendar-alt"></i> ${item.tanggalAsesmen}</span></td>
-                    <td data-label="RRI & Krim"><span class="badge badge-score">${item.nilaiRRI}</span></td>
-                    <td data-label="Hasil IPPA"><span class="badge badge-ippa">${item.hasilIPPA}</span></td>
+                    <td class="col-center" style="font-size: 0.9rem; color: #64748b;">${index + 1}</td>
+<td class="col-center">
+        <span class="badge badge-date">
+            <i class="far fa-calendar-alt"></i> ${item.tanggalAsesmen}
+        </span>
+    </td>
+                    <td class="col-center">
+                        <span class="badge badge-score" style="font-weight: 600;">${item.nilaiRRIDanKrim}</span>
+                    </td>
+                    <td class="col-center">
+                        <span class="badge badge-ippa" style="font-weight: 600;">${item.hasilIPPA}</span>
+                    </td>
+                    <td style="font-size: 0.85rem; line-height: 1.6; color: #334155; min-width: 250px; text-align: left;">
+                        ${item.catatanKriminogenik || '-'}
+                    </td>
+                    <td style="font-size: 0.85rem; line-height: 1.6; color: #dc3545; font-weight: 500; min-width: 250px; text-align: left;">
+                        ${item.catatanPelanggaran || '-'}
+                    </td>
                 `;
                 tbody.appendChild(tr);
             });
             
-            // Animasi masuk
+            // Animasi Fade-In
             setTimeout(() => {
                 resultsSection.style.transition = 'opacity 0.5s ease';
                 resultsSection.style.opacity = '1';
@@ -99,7 +111,7 @@ searchForm.addEventListener('submit', async (e) => {
         }
     } catch (error) {
         loadingDiv.classList.add('hidden');
-        errorMsg.innerHTML = '<i class="fas fa-wifi"></i> Terjadi kesalahan jaringan. Pastikan URL Apps Script sudah benar dan internet stabil.';
+        errorMsg.innerHTML = '<i class="fas fa-wifi"></i> Terjadi kesalahan jaringan. Pastikan URL Apps Script benar dan internet stabil.';
         errorMsg.classList.remove('hidden');
     } finally {
         searchBtn.innerHTML = '<i class="fas fa-search"></i> Cari Data';
