@@ -51,62 +51,52 @@
             </div>
             <div id="error-msg" class="hidden alert alert-danger"></div>
 
-            <section id="results" class="hidden">
-                <div class="result-layout">
-                    
-                    <div class="card id-card">
-                        <div class="card-accent"></div>
-                        <div class="card-body">
-                            <div class="text-center">
-                                <div class="avatar-placeholder">
-                                    <i class="fas fa-user-graduate"></i>
-                                </div>
-                                <p class="label-sm">Identitas Anak Binaan</p>
-                                <h2 id="res-nama" class="anbin-name">-</h2>
-                                <p class="history-count" id="res-count">Ditemukan 0 Riwayat Asesmen</p>
-                            </div>
-                            
-                            <div class="profile-details">
-                                <div class="detail-box">
-                                    <span class="detail-label"><i class="fas fa-star text-accent"></i> Minat & Bakat</span>
-                                    <div class="detail-value" id="res-minat">-</div>
-                                </div>
-                                <div class="detail-box">
-                                    <span class="detail-label"><i class="fas fa-exclamation-circle text-muted"></i> Catatan Kriminogenik</span>
-                                    <div class="detail-value catatan-highlight" id="res-catatan">-</div>
-                                </div>
-                                <div class="detail-box">
-                                    <span class="detail-label"><i class="fas fa-triangle-exclamation text-danger"></i> Riwayat Pelanggaran</span>
-                                    <div class="detail-value pelanggaran-highlight" id="res-pelanggaran">-</div>
-                                </div>
-                            </div>
-                        </div>
+<section id="results" class="hidden">
+    <div class="result-layout-horizontal" style="display: flex; gap: 25px; align-items: flex-start; margin-top: 20px;">
+        
+        <aside class="sidebar-profile" style="flex: 0 0 300px; position: sticky; top: 20px;">
+            <div class="card id-card-sidebar">
+                <div class="card-accent"></div>
+                <div class="card-body text-center" style="padding: 25px 20px;">
+                    <div class="avatar-placeholder" style="margin-bottom: 15px;">
+                        <i class="fas fa-user-circle fa-4x text-primary"></i>
                     </div>
-
-                    <div class="card assessment-card">
-                        <div class="card-header">
-                            <h3><i class="fas fa-history"></i> Riwayat Hasil Asesmen</h3>
-                        </div>
-                        <div class="card-body p-0">
-                            <div class="table-responsive">
-                                <table class="history-table">
-                                    <thead>
-                                        <tr>
-                                            <th>No.</th>
-                                            <th>Tanggal Asesmen</th>
-                                            <th>Nilai RRI & Kriminogenik</th>
-                                            <th>Hasil Nilai IPPA</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="res-history-body">
-                                        </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
+                    <p class="label-sm" style="font-size: 0.7rem; color: #64748b; text-transform: uppercase;">Profil Anak Binaan</p>
+                    <h2 id="res-nama" style="font-weight: 700; color: #0f172a; margin: 10px 0 20px; line-height: 1.2;">-</h2>
                     
+                    <div class="minat-box" style="background: #f8fafc; padding: 15px; border-radius: 12px; border: 1px solid #e2e8f0; text-align: left;">
+                        <span class="detail-label" style="font-size: 0.75rem; color: #64748b; font-weight: 600; text-transform: uppercase;"><i class="fas fa-star text-warning"></i> Minat & Bakat</span>
+                        <div id="res-minat" style="font-size: 0.9rem; font-weight: 600; color: #334155; margin-top: 5px;">-</div>
+                    </div>
                 </div>
-            </section>
+            </div>
+        </aside>
+
+        <main class="main-content-table" style="flex: 1; min-width: 0;">
+            <div class="card history-card-full">
+                <div class="card-header" style="padding: 15px 20px; border-bottom: 1px solid #e2e8f0; background: #f8fafc;">
+                    <h3 id="res-count" style="margin: 0; font-size: 1.1rem; color: #0f172a;"><i class="fas fa-history"></i> Riwayat Asesmen</h3>
+                </div>
+                <div class="table-responsive">
+                    <table class="data-table" style="width: 100%; border-collapse: collapse;">
+                        <thead>
+                            <tr style="background: #f8fafc;">
+                                <th class="col-center" style="padding: 12px; border-bottom: 2px solid #e2e8f0;">No.</th>
+                                <th class="col-center" style="padding: 12px; border-bottom: 2px solid #e2e8f0;">Tanggal Asesmen</th>
+                                <th class="col-center" style="padding: 12px; border-bottom: 2px solid #e2e8f0;">RRI & Kriminogenik</th>
+                                <th class="col-center" style="padding: 12px; border-bottom: 2px solid #e2e8f0;">IPPA</th>
+                                <th style="padding: 12px; border-bottom: 2px solid #e2e8f0; text-align: left;">Catatan Kriminogenik</th>
+                                <th style="padding: 12px; border-bottom: 2px solid #e2e8f0; text-align: left;">Pelanggaran</th>
+                            </tr>
+                        </thead>
+                        <tbody id="res-history-body">
+                            </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+</section>
         </main>
         <footer class="footer-wrapper fade-in">
             <div class="card footer-card">
